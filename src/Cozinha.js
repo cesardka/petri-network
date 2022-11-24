@@ -1,4 +1,3 @@
-import colors from "colors";
 import {
   cozinheiros,
   filaDePedidosEntrandoCozinha,
@@ -21,9 +20,7 @@ export class Cozinha extends Process {
     cozinheiros.allocate(1);
     scheduler.isDebbuger &&
       console.log(
-        `Quantidade de cozinheiros existentes --> ${colors.yellow(
-          "" + cozinheiros.quantity
-        )} e em uso  cozinheiros.used)} cozinheiros`
+        `Quantidade de cozinheiros existentes --> ${cozinheiros.quantity} cozinheiros`
       );
     this.pedidoSendoPreparado = filaDePedidosEntrandoCozinha.remove();
   }

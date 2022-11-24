@@ -14,9 +14,9 @@ console.log("Bem vindo à Rede de Petri em TypeScript! :)");
 
 const rede = new RedePetri();
 
-const prompt = require("prompt-sync")({ sigint: true });
+const prompts = require("prompts")({ sigint: true });
 
-const qtdLugares = Number(prompt("Quantos Lugares: "));
+const qtdLugares = Number(prompts("Quantos Lugares: "));
 
 // instancia todos os lugares
 for (let i = 1; i <= qtdLugares; i++) {
@@ -27,21 +27,21 @@ for (let i = 1; i <= qtdLugares; i++) {
   lugar && rede.insereCallbackTokenSaindoLugar(lugar, saiuDoLugar, 2);
 }
 
-const qtdTransicoes = Number(prompt("Quantas transições: "));
+const qtdTransicoes = Number(prompts("Quantas transições: "));
 
 // instancia todas as transicoes pra cada lugar
 for (let i = 1; i <= qtdTransicoes; i++) {
-  const lugarEntradaTransicao = prompt(
+  const lugarEntradaTransicao = prompts(
     `Quais são os lugares de entrada de T${i}? `
   );
   const lugaresEntrada = lugarEntradaTransicao.split(",");
 
-  const lugaresComConexaoInibidora = prompt(
+  const lugaresComConexaoInibidora = prompts(
     `Quais são os lugares de entrada de T${i} com conexão inibidora? `
   );
   const lugaresConexaoInibidora = lugaresComConexaoInibidora.split(",");
 
-  const lugaresComConexaoReset = prompt(
+  const lugaresComConexaoReset = prompts(
     `Quais são os lugares de entrada de T${i} com conexão reset? `
   );
   const lugaresConexaoReset = lugaresComConexaoReset.split(",");
@@ -71,7 +71,7 @@ for (let i = 1; i <= qtdTransicoes; i++) {
     ); //conecta lugar de entrada
   }
 
-  const lugarSaidaTransicao = prompt(
+  const lugarSaidaTransicao = prompts(
     `Quais são os lugares de saída de T${i}? `
   );
   const lugarSaida = lugarSaidaTransicao.split(",");
@@ -90,7 +90,7 @@ for (let i = 1; i <= qtdTransicoes; i++) {
 
 // ver marcas pra cada lugar
 for (let i = 1; i <= qtdLugares; i++) {
-  const qtdTokens = Number(prompt(`Quantas marcas em L${i}? `));
+  const qtdTokens = Number(prompts(`Quantas marcas em L${i}? `));
 
   rede.insereTokenEmLugar(qtdTokens, rede.getLugar(i));
 }
@@ -103,7 +103,7 @@ for (let i = 0; i < conexoes.length; i++) {
   const transicaoConexao = rede.getTransicaoDeConexao(conexoes[i]);
 
   const peso = Number(
-    prompt(
+    prompts(
       `Qual o peso do arco de L${lugarConexao.id} para T${transicaoConexao.id}? `
     )
   );

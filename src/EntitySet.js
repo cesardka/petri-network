@@ -1,4 +1,3 @@
-import colors from "colors";
 import { scheduler } from ".";
 
 export const Mode = {
@@ -111,7 +110,7 @@ export class EntitySet {
       );
 
     if (!entityRemoved || !entityRemoved.id) {
-      console.error(colors.red("Unable to remove Entity"));
+      console.error("Unable to remove Entity");
       return;
     }
 
@@ -132,7 +131,7 @@ export class EntitySet {
     const [removed] = this.set.splice(index, 1);
 
     if (!removed || !removed.id) {
-      console.error(colors.red("Unable to remove Entity"));
+      console.error("Unable to remove Entity");
       return null;
     }
     this.updateSetSize();

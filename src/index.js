@@ -4,7 +4,7 @@ import { Scheduler } from "./Scheduler";
 import { Cliente } from "./Cliente";
 import { Banheiro } from "./Banheiro";
 import { RedePetriHandler } from "./RedePetriHandler";
-import prompt from "prompt-sync";
+import prompts from "prompts";
 
 // Cria o Scheduler
 export const scheduler = new Scheduler();
@@ -156,7 +156,7 @@ while (true) {
   console.log("4. SimulateUntil");
   console.log("9. Sair\n");
 
-  const option = prompt({ sigint: true })("");
+  const option = prompts({ sigint: true })("");
 
   switch (option) {
     case "1":
@@ -166,11 +166,11 @@ while (true) {
       scheduler.simulateOneStep();
       break;
     case "3":
-      const duration = prompt({ sigint: true })("Digite o duration:");
+      const duration = prompts({ sigint: true })("Digite o duration:");
       scheduler.simulateBy(Number(duration));
       break;
     case "4":
-      const absoluteTime = prompt({ sigint: true })(
+      const absoluteTime = prompts({ sigint: true })(
         "Digite quanto tempo você deseja executar:"
       );
       scheduler.simulateUntil(Number(absoluteTime));

@@ -1,6 +1,5 @@
 import Table from "cli-table";
-import prompt from "prompt-sync";
-import colors from "colors";
+import prompts from "prompts";
 
 import { Conexao } from "./Conexao";
 import { Lugar } from "./Lugar";
@@ -92,7 +91,7 @@ export class RedePetri {
   setTransicaoInativa(id) {
     const transicao = this.getTransicao(id);
     if (!transicao) {
-      console.error(colors.red("Transição não encontrada"));
+      console.error("Transição não encontrada");
     }
     transicao?.setStatus(false);
   }
@@ -100,7 +99,7 @@ export class RedePetri {
   setTransicaoAtiva(id) {
     const transicao = this.getTransicao(id);
     if (!transicao) {
-      console.error(colors.red("Transição não encontrada"));
+      console.error("Transição não encontrada");
     }
     transicao?.setStatus(true);
   }
@@ -219,7 +218,7 @@ export class RedePetri {
   quantosTokens(idLugar) {
     let lugar = this.getLugar(idLugar);
     if (!lugar) {
-      console.error(colors.red("Lugar não encontrado"));
+      console.error("Lugar não encontrado");
     }
     return lugar?.getTokens();
   }
@@ -429,7 +428,7 @@ export class RedePetri {
       console.log("9. Sair");
       console.log();
 
-      const option = prompt({ sigint: true })("");
+      const option = prompts({ sigint: true })("");
 
       switch (option) {
         case "1":

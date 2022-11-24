@@ -7,10 +7,9 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "cli-table": "^0.3.6",
-    "colors": "^1.4.0",
     "crypto-js": "^4.1.1",
     "fs": "^0.0.1-security",
-    "prompt-sync": "^4.2.0",
+    "prompts": "^2.4.2",
     "random-variate-generators": "^1.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,7 +19,7 @@
     "xml2js": "^0.4.23"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run build && node index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -36,16 +35,9 @@
     "path": false,
     "os": false
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

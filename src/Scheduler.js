@@ -1,7 +1,6 @@
 import { RandVarGen } from "random-variate-generators";
 import { v4 as uuid } from "uuid";
-import colors from "colors";
-import promptSync from "prompt-sync";
+import promptSync from "prompts";
 import {
   cozinheiros,
   filaDeClientesComendoNaMesa2,
@@ -19,7 +18,7 @@ import {
 
 const rvg = new RandVarGen();
 
-const prompt = promptSync({ sigint: true });
+const prompts = promptSync({ sigint: true });
 
 export class Scheduler {
   time;
@@ -111,13 +110,13 @@ export class Scheduler {
     }
 
     this.time = nextTime;
-    console.log(colors.bgBlue("Tempo atual: " + this.time));
+    console.log("Tempo atual: " + this.time);
 
     // Varre os processos do tempo "time"
     while (this.processSchedule[this.time].length > 0) {
       if (this.isDebbuger) {
-        const continueResult = prompt(
-          colors.yellow('\nDigite enter para continuar e "N" para encerrar \n')
+        const continueResult = prompts(
+          '\nDigite enter para continuar e "N" para encerrar \n'
         );
 
         if (continueResult.toUpperCase() === "N") {
@@ -136,11 +135,9 @@ export class Scheduler {
         if (!engineProcess.canExecute()) {
           this.isDebbuger &&
             console.log(
-              colors.red(
-                `\tSem recursos para executar processo: --> Process ${
-                  engineProcess.name
-                } com id ${engineProcess.getId()} e tempo: ${this.time}`
-              )
+              `\tSem recursos para executar processo: --> Process ${
+                engineProcess.name
+              } com id ${engineProcess.getId()} e tempo: ${this.time}`
             );
 
           // Reagenda o início do processo baseado no tempo de duração dele
@@ -207,7 +204,7 @@ export class Scheduler {
 
         return line + " ]";
       });
-      console.log(colors.green("processSchedule --> "), printSchedule);
+      console.log("processSchedule --> ", printSchedule);
     }
 
     // após processar todos dentro do tempo "time" remove a chave da estrutura
@@ -280,7 +277,7 @@ export class Scheduler {
     const entity = this.entityList.find((entity) => entity.getId() === id);
 
     if (!entity) {
-      console.error(colors.red(`getEntity: entity com ID ${id} não existe`));
+      console.error(`getEntity: entity com ID ${id} não existe`);
     }
 
     this.isDebbuger && console.log(`getEntity, com id ${id}`);
@@ -302,9 +299,7 @@ export class Scheduler {
     );
 
     if (!resource) {
-      console.error(
-        colors.red(`getResource: resource com ID ${id} não existe`)
-      );
+      console.error(`getResource: resource com ID ${id} não existe`);
     }
 
     this.isDebbuger && console.log(`getResource, com id ${id}`);
@@ -324,9 +319,7 @@ export class Scheduler {
     );
 
     if (!process) {
-      console.error(
-        colors.red(`getProcess: Processo com ID ${processId} não existe`)
-      );
+      console.error(`getProcess: Processo com ID ${processId} não existe`);
     }
 
     this.isDebbuger && console.log(`getProcess, com id ${processId}`);
@@ -348,7 +341,7 @@ export class Scheduler {
     );
 
     if (!entitySet) {
-      console.error(colors.red(`getEntitySet com ID ${id} não existe`));
+      console.error(`getEntitySet com ID ${id} não existe`);
     }
 
     this.isDebbuger && console.log(`getEntitySet, com id ${id}`);
