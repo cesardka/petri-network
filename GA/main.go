@@ -151,7 +151,7 @@ func printRedePetri(redePetri RedeDePetriType) {
 	tabela.Flush()
 	
 	// Imprime ciclo a ciclo
-	for ciclo := 0; ciclo < 10; ciclo++ {
+	for ciclo := 0; ; ciclo++ {
 		transicoesAtivas := false
 		<-time.After(time.Millisecond * 650)
 		
