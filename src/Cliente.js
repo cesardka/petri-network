@@ -1,20 +1,17 @@
-import { randomInt } from "crypto";
+import { randomInt } from "crypto-js";
 import {
   atendenteCaixa1,
   atendenteCaixa2,
   filaDeClientesNoCaixa1,
   filaDeClientesNoCaixa2,
   scheduler,
-} from "..";
-import { Entity } from "../Entity";
+} from "./index";
+import { Entity } from "./Entity";
 import { Process } from "./Process";
 import { Caixa } from "./Caixa";
 
 export class Cliente extends Process {
   numCaixaDestino = 0;
-  constructor(name, duration) {
-    super(name, duration);
-  }
 
   executeOnEnd() {
     const cliente = "cliente" + randomInt(1, 5);

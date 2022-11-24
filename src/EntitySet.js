@@ -1,3 +1,4 @@
+import colors from "colors";
 import { scheduler } from ".";
 
 export const Mode = {
@@ -69,6 +70,7 @@ export class EntitySet {
           );
         }
         break;
+      default:
     }
 
     this.setTime[entity.id] = {
@@ -93,10 +95,11 @@ export class EntitySet {
         entityRemoved = this.set.shift();
         break;
       case Mode.NONE:
-        const rand = randomInteger(0, this.set.length - 1);
+        const rand = this.randomInteger(0, this.set.length - 1);
         entityRemoved = this.removeById(this.set[rand].getId());
-
         break;
+      default:
+        console.log("Modo inválido");
     }
 
     scheduler.isDebbuger &&

@@ -1,5 +1,6 @@
 import Table from "cli-table";
 import prompt from "prompt-sync";
+import colors from "colors";
 
 import { Conexao } from "./Conexao";
 import { Lugar } from "./Lugar";

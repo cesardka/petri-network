@@ -10,16 +10,12 @@ import {
   mesas4Livres,
   scheduler,
   garcom,
-} from "../..";
+} from "./index";
 import { Process } from "./Process";
 import { Garcom } from "./Garcom";
 
 export class FilaMesa extends Process {
   mesa = "";
-
-  constructor(name, duration) {
-    super(name, duration);
-  }
 
   canExecute() {
     if (this.name == "FilaMesa-balcao") {

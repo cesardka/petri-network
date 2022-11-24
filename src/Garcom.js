@@ -10,7 +10,7 @@ import {
   filaDeClientesComendoNaMesa2,
   filaDeClientesComendoNaMesa4,
   filaDeClientesComendoNoBalcao,
-} from "..";
+} from "./index";
 import { Process } from "./Process";
 import { PedidoGarcom } from "./PedidoGarcom";
 import { Mesa } from "./Mesa";
@@ -35,16 +35,16 @@ export class Garcom extends Process {
   }
 
   executeOnEnd() {
-    if (this.local == "garcomNoCaixa") {
+    if (this.local === "garcomNoCaixa") {
       garcom.petriNet?.getLugarByLabel("atendenteVoltou")?.insereToken(1);
-    } else if (this.local == "levandoPedido") {
+    } else if (this.local === "levandoPedido") {
       garcom.petriNet?.getLugarByLabel("pedidoEntregue")?.insereToken(1);
-      if (this.name == "Garcom-DeliverOrder-balcao") {
+      if (this.name === "Garcom-DeliverOrder-balcao") {
         filaDeClientesComendoNoBalcao.insert(
           filaDeClientesEsperandoPedidoNoBalcao.remove()
         );
         this.mesa = "balcao";
-      } else if (this.name == "Garcom-DeliverOrder-M2") {
+      } else if (this.name === "Garcom-DeliverOrder-M2") {
         filaDeClientesComendoNaMesa2.insert(
           filaDeClientesEsperandoPedidoNaMesa2.remove()
         );
@@ -60,14 +60,14 @@ export class Garcom extends Process {
           new Mesa("Mesa-" + this.mesa, () => scheduler.normal(20, 8))
         )
       );
-    } else if (this.local == "higienizandoMesa") {
+    } else if (this.local === "higienizandoMesa") {
       garcom.petriNet?.getLugarByLabel("mesaHigienizada")?.insereToken(1);
-      if (this.name == "Garcom-CleanTable-balcao") {
+      if (this.name === "Garcom-CleanTable-balcao") {
         filaDeClientesEsperandoPedidoNoBalcao.insert(
           filaGarcomLimpaBalcao.remove()
         );
         this.mesa = "balcao";
-      } else if (this.name == "Garcom-CleanTable-M2") {
+      } else if (this.name === "Garcom-CleanTable-M2") {
         filaDeClientesEsperandoPedidoNaMesa2.insert(
           filaGarcomLimpaMesa2.remove()
         );

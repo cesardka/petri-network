@@ -5,15 +5,12 @@ import {
   filaDePedidosEsperandoEntrega,
   scheduler,
   garcom,
-} from "../..";
+} from "./index.js";
 import { Process } from "./Process";
 import { Garcom } from "./Garcom";
 
 export class PedidoGarcom extends Process {
   mesa = "";
-  constructor(name, duration) {
-    super(name, duration);
-  }
 
   searchOrder(clientesEsperandoMesa) {
     for (let cliente of clientesEsperandoMesa.getEntitySet()) {
