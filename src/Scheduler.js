@@ -1,5 +1,6 @@
 import { RandVarGen } from "random-variate-generators";
 import { v4 as uuid } from "uuid";
+import colors from "colors";
 import promptSync from "prompt-sync";
 import {
   cozinheiros,
@@ -103,7 +104,7 @@ export class Scheduler {
     // Atualiza o tempo do modelo pro tempo atual do processo
     const nextTime = this.getNextTime();
 
-    if (nextTime != this.time) {
+    if (nextTime !== this.time) {
       this.entitySetList.forEach((entitySet) =>
         entitySet.timeCallback(nextTime)
       );
@@ -190,7 +191,9 @@ export class Scheduler {
           );
       }
 
-      const sortedSchedule = Object.keys(this.processSchedule).sort(sorter);
+      const sortedSchedule = Object.keys(this.processSchedule).sort(
+        this.sorter
+      );
 
       // Tabela com todas informações dos processos (nome, ID e type)
       const printSchedule = sortedSchedule.map((key) => {

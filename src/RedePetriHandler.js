@@ -1,4 +1,4 @@
-import { RedePetri } from "./RedePetri";
+import { RedePetri } from "./Petri/RedePetri";
 
 export class RedePetriHandler {
   petriNet = null;

@@ -6,14 +6,10 @@ import {
   mesas2Livres,
   mesas4Livres,
   scheduler,
-} from "..";
+} from "./index";
 import { Process } from "./Process";
 
 export class Mesa extends Process {
-  constructor(name, duration) {
-    super(name, duration);
-  }
-
   executeOnEnd() {
     var cliente = null;
     if (this.name == "Mesa-balcao") {

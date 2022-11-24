@@ -1,11 +1,8 @@
 import { atendenteCaixa1, atendenteCaixa2, scheduler, garcom } from ".";
-import { Process } from "./process";
+import { Garcom } from "./Garcom";
+import { Process } from "./Process";
 
 export class Banheiro extends Process {
-  constructor(name, duration) {
-    super(name, duration);
-  }
-
   canExecute() {
     const qtdAtendentesBanheiro =
       garcom.petriNet?.getLugarByLabel("substituirCaixa")?.getTokens() +

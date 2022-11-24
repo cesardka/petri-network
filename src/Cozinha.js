@@ -1,17 +1,14 @@
+import colors from "colors";
 import {
   cozinheiros,
   filaDePedidosEntrandoCozinha,
   filaDePedidosEsperandoEntrega,
   scheduler,
-} from "..";
-import { Process } from "../Process";
+} from "./index";
+import { Process } from "./Process";
 
 export class Cozinha extends Process {
   pedidoSendoPreparado;
-
-  constructor(name, duration) {
-    super(name, duration);
-  }
 
   canExecute() {
     if (!filaDePedidosEntrandoCozinha.isEmpty() && cozinheiros.canAllocate(1)) {
