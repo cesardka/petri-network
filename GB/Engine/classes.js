@@ -1,4 +1,4 @@
-export class Place {
+class Place {
   constructor(index, desc) {
     this.name = "P" + index;
     this.marks = 0;
@@ -10,14 +10,14 @@ export class Place {
   }
 }
 
-export class Transition {
+class Transition {
   constructor(index) {
     this.name = "T" + index;
     this.isEnabled = false;
   }
 }
 
-export class Arc {
+class Arc {
   constructor(begin, end, weight) {
     this.begin = begin;
     this.end = end;
@@ -25,7 +25,7 @@ export class Arc {
   }
 }
 
-export class PetriNet {
+class PetriNet {
   constructor(name) {
     this.name = name;
     this.places = [];
@@ -85,7 +85,7 @@ export class PetriNet {
   }
 }
 
-export class AppUtils {
+class AppUtils {
   exponential(rate, randomUniform) {
     rate = rate || 1;
 
@@ -120,7 +120,7 @@ export class AppUtils {
   }
 }
 
-export class Entity {
+class Entity {
   constructor(name, size, id, petri) {
     this.name = name;
     this.petriNet = petri;
@@ -129,14 +129,14 @@ export class Entity {
   }
 }
 
-export class Event {
+class Event {
   constructor(name, eventId) {
     this.name = name;
     this.id = eventId;
   }
 }
 
-export class EntitySet {
+class EntitySet {
   constructor(name, setId, maxSize) {
     this.name = name;
     this.id = setId;
@@ -184,7 +184,7 @@ export class EntitySet {
   }
 }
 
-export class Resource {
+class Resource {
   constructor(name, max) {
     this.name = name;
     this.maxQty = max;
@@ -212,7 +212,7 @@ export class Resource {
   }
 }
 
-export class Scheduler {
+class Scheduler {
   constructor() {
     this.currentTime = 0;
     this.fel = [];
@@ -265,14 +265,27 @@ export class Scheduler {
       }
 
       // console.log("FEL:", this.fel);
-      // Acha a função na fila com menor time, executa e remove da FEL
+      // Acha a função na fila com menor tempo, executa e remove da FEL
       var toExecuteNow = this.fel.reduce(function (prev, curr) {
         return prev.time < curr.time ? prev : curr;
       });
       this.currentTime = toExecuteNow.time;
       this.fel.splice(this.fel.indexOf(toExecuteNow), 1);
       toExecuteNow.function.apply(null, toExecuteNow.params);
-      // console.log("------------ "+this.currentTime+"---------------\n");
+      console.log("------------ " + this.currentTime + "---------------\n");
     }, 1);
   }
 }
+
+module.export = {
+  AppUtils,
+  Arc,
+  Entity,
+  EntitySet,
+  Event,
+  PetriNet,
+  Place,
+  Resource,
+  Scheduler,
+  Transition,
+};
