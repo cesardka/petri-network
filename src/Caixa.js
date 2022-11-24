@@ -24,7 +24,7 @@ export class Caixa extends Process {
   }
 
   canExecute() {
-    if (this.numCaixa == 1) {
+    if (this.numCaixa === 1) {
       if (!filaDeClientesNoCaixa1.isEmpty() && atendenteCaixa1.canAllocate(1)) {
         return true;
       }
@@ -38,7 +38,7 @@ export class Caixa extends Process {
 
   executeOnStart() {
     // se conseguir alocar um atendente, inicia o atendimento.
-    if (this.numCaixa == 1) {
+    if (this.numCaixa === 1) {
       scheduler.isDebbuger &&
         console.log(
           this.name + ": Iniciando atendimento no caixa " + this.numCaixa
@@ -76,12 +76,12 @@ export class Caixa extends Process {
 
     // Roteamento dos clientes para a mesa corresponte
     const nomeCliente = cliente.getName();
-    if (nomeCliente == "cliente1") {
+    if (nomeCliente === "cliente1") {
       filaDeClientesNoBalcao.insert(this.clienteSendoAtendidoNoCaixa);
       scheduler.startProcessNow(
         scheduler.createProcess(new FilaMesa("FilaMesa-balcao", () => 1))
       );
-    } else if (nomeCliente == "cliente2") {
+    } else if (nomeCliente === "cliente2") {
       filaDeClientesNaMesa2.insert(this.clienteSendoAtendidoNoCaixa);
       scheduler.startProcessNow(
         scheduler.createProcess(new FilaMesa("FilaMesa-M2", () => 1))
@@ -95,7 +95,7 @@ export class Caixa extends Process {
     scheduler.isDebbuger && console.log(nomeCliente + " indo para mesa");
 
     // Libera atendente
-    if (this.numCaixa == 1) {
+    if (this.numCaixa === 1) {
       atendenteCaixa1.release(1);
     } else {
       atendenteCaixa2.release(1);

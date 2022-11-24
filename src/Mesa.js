@@ -12,10 +12,10 @@ import { Process } from "./Process";
 export class Mesa extends Process {
   executeOnEnd() {
     var cliente = null;
-    if (this.name == "Mesa-balcao") {
+    if (this.name === "Mesa-balcao") {
       cliente = filaDeClientesComendoNoBalcao.remove();
       bancosLivres.release(1);
-    } else if (this.name == "Mesa-M2") {
+    } else if (this.name === "Mesa-M2") {
       cliente = filaDeClientesComendoNaMesa2.remove();
       mesas2Livres.release(1);
     } else {

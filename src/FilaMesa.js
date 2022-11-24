@@ -18,11 +18,11 @@ export class FilaMesa extends Process {
   mesa = "";
 
   canExecute() {
-    if (this.name == "FilaMesa-balcao") {
+    if (this.name === "FilaMesa-balcao") {
       if (!filaDeClientesNoBalcao.isEmpty() && bancosLivres.canAllocate(1)) {
         return true;
       }
-    } else if (this.name == "FilaMesa-M2") {
+    } else if (this.name === "FilaMesa-M2") {
       if (!filaDeClientesNaMesa2.isEmpty() && mesas2Livres.canAllocate(1)) {
         return true;
       }
@@ -35,7 +35,7 @@ export class FilaMesa extends Process {
   }
 
   executeOnStart() {
-    if (this.name == "FilaMesa-balcao") {
+    if (this.name === "FilaMesa-balcao") {
       this.mesa = "balcao";
       bancosLivres.allocate(1);
       scheduler.isDebbuger &&
@@ -43,7 +43,7 @@ export class FilaMesa extends Process {
           `Quantidade de bancos existentes: ${bancosLivres.quantity}. Sendo usados:  ${bancosLivres.used}`
         );
       filaGarcomLimpaBalcao.insert(filaDeClientesNoBalcao.remove());
-    } else if (this.name == "FilaMesa-M2") {
+    } else if (this.name === "FilaMesa-M2") {
       this.mesa = "M2";
       mesas2Livres.allocate(1);
       scheduler.isDebbuger &&

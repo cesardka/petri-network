@@ -141,8 +141,8 @@ export class RedePetri {
   removeConexao(lugar, transicao) {
     for (let conexao of this.conexoes) {
       if (
-        conexao.getLugar().getId() == lugar.getId() &&
-        conexao.getTransicao().getId() == transicao.getId()
+        conexao.getLugar().getId() === lugar.getId() &&
+        conexao.getTransicao().getId() === transicao.getId()
       ) {
         let index = this.conexoes.indexOf(conexao);
         if (index > -1) {
@@ -176,8 +176,8 @@ export class RedePetri {
     const conexoesEntrada = [];
     for (let conexao of this.conexoes) {
       if (
-        conexao.getTransicao().getId() == idTransicao &&
-        conexao.getIsEntrada() == true
+        conexao.getTransicao().getId() === idTransicao &&
+        conexao.getIsEntrada() === true
       ) {
         conexoesEntrada.push(conexao);
       }
@@ -189,8 +189,8 @@ export class RedePetri {
     const conexoesSaida = [];
     for (let conexao of this.conexoes) {
       if (
-        conexao.getTransicao().getId() == idTransicao &&
-        conexao.getIsEntrada() == true
+        conexao.getTransicao().getId() === idTransicao &&
+        conexao.getIsEntrada() === true
       ) {
         conexoesSaida.push(conexao);
       }

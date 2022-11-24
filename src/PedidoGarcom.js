@@ -16,7 +16,7 @@ export class PedidoGarcom extends Process {
     for (let cliente of clientesEsperandoMesa.getEntitySet()) {
       for (let pedido of filaDePedidosEsperandoEntrega.getEntitySet()) {
         let order = pedido;
-        if (cliente.getId() == order.getIdCliente()) {
+        if (cliente.getId() === order.getIdCliente()) {
           filaDePedidosEsperandoEntrega.removeById(order.getId());
           scheduler.destroyEntity(order.getId());
           return true; // Pedido do cliente está pronto
@@ -28,12 +28,12 @@ export class PedidoGarcom extends Process {
 
   canExecute() {
     if (!filaDePedidosEsperandoEntrega.isEmpty()) {
-      if (this.name == "PedidoGarcom-balcao") {
+      if (this.name === "PedidoGarcom-balcao") {
         if (!this.searchOrder(filaDeClientesEsperandoPedidoNoBalcao)) {
           return false;
         }
         this.mesa = "balcao";
-      } else if (this.name == "PedidoGarcom-M2") {
+      } else if (this.name === "PedidoGarcom-M2") {
         if (!this.searchOrder(filaDeClientesEsperandoPedidoNaMesa2)) {
           return false;
         }
