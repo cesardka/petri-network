@@ -101,7 +101,7 @@ export class RedePetri {
   public setTransicaoInativa(id: number) {
     const transicao = this.getTransicao(id)
     if (!transicao) {
-      console.error(colors.red('Transição não encontrada'))
+      console.error(colors.blue('Transição não encontrada'))
     }
     transicao?.setStatus(false)
   }
@@ -109,7 +109,7 @@ export class RedePetri {
   public setTransicaoAtiva(id: number) {
     const transicao = this.getTransicao(id)
     if (!transicao) {
-      console.error(colors.red('Transição não encontrada'))
+      console.error(colors.blue('Transição não encontrada'))
     }
     transicao?.setStatus(true)
   }
@@ -228,7 +228,7 @@ export class RedePetri {
   public quantosTokens(idLugar: number): number | undefined {
     let lugar = this.getLugar(idLugar)
     if (!lugar) {
-      console.error(colors.red('Lugar não encontrado'))
+      console.error(colors.blue('Lugar não encontrado'))
     }
     return lugar?.getTokens()
   }
