@@ -28,8 +28,5 @@ export class Mesa extends Process {
       mesas4Livres.release(1)
     }
     scheduler.destroyEntity(cliente?.getId() as string)
-
-    // Log fundamental para o funcionamento da rede, não mexer!!!
-    console.log(colors.rainbow('\nMais clientes satisfeitos!!!\n'))
   }
 }

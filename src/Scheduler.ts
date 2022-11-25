@@ -49,32 +49,15 @@ export class Scheduler {
     this.time = initialTime
   }
 
-  /**
-   * getTime()
-   * @returns o tempo atual do modelo
-   */
   public getTime() {
     return this.time
   }
 
-  // ---------- Disparo de eventos e processos ----------
-
-  /**
-   * startProcessNow(process: Process)
-   * @param process
-   * @returns Inicializa o processo.
-   */
   public startProcessNow(process: Process) {
     this.isDebbuger && console.log('startProcessNow, com id:', process.getId())
     this.startProcessAt(process, this.time)
   }
 
-  /**
-   * startProcessIn(process: string, timeToStart: number)
-   * @param process
-   * @param timeToStart
-   * @returns o agendamento do começo do processo daqui a 10 minutos.
-   */
   public startProcessIn(process: Process, timeToStart: number) {
     this.isDebbuger &&
       console.log(
@@ -83,12 +66,6 @@ export class Scheduler {
     this.startProcessAt(process, this.time + timeToStart)
   }
 
-  /**
-   * startProcessAt(process: string, absoluteTime: number)
-   * @param process
-   * @param absoluteTime
-   * @returns o agendamento do começo processo em um momento específico
-   */
   public startProcessAt(engineProcess: Process, absoluteTime: number) {
     this.isDebbuger &&
       console.log(
@@ -111,17 +88,9 @@ export class Scheduler {
     }
   }
 
-  /**
-   * waitFor(time: number)
-   * @param time
-   * @returns se a abordagem para especificação da passagem de tempo nos processos for explícita
-   */
   public async waitFor(time: number) {
-    // sleep
     return new Promise(resolve => setTimeout(resolve, time * 1000))
   }
-
-  // ---------- Controlando tempo de execução ----------
 
   private isProcessScheduleEmpty() {
     for (const processList of Object.values(this.processSchedule)) {
@@ -131,8 +100,6 @@ export class Scheduler {
   }
 
   private async executeSimulation() {
-    // Atualiza o tempo do modelo pro tempo atual do processo
-
     const nextTime = this.getNextTime()
 
     if (nextTime != this.time) {
@@ -142,9 +109,6 @@ export class Scheduler {
     this.time = nextTime
     console.log(colors.bgBlue('TEMPO ATUAL: ' + this.time))
 
-    // const processes = this.processSchedule[time]
-
-    // Varre os processos do tempo "time"
     while (this.processSchedule[this.time].length > 0) {
       if (this.isDebbuger) {
         const continueResult = prompt(
@@ -160,13 +124,10 @@ export class Scheduler {
         }
       }
 
-      // Remove o primeiro processo do array
       const { engineProcess, type } = this.processSchedule[
         this.time
       ].shift() as ProcessItem
-      // const [{ engineProcess, type }] = processes.splice(0, 1)
 
-      // Valida se é o ínicio ou fim da execução do processo
       if (type === 'start') {
         if (!engineProcess.canExecute()) {
           this.isDebbuger &&
@@ -178,7 +139,6 @@ export class Scheduler {
               )
             )
 
-          // Reagenda o início do processo baseado no tempo de duração dele
           if (this.processSchedule[this.time + 1]) {
             this.processSchedule[this.time + 1] = [
               ...this.processSchedule[this.time + 1],
@@ -205,7 +165,6 @@ export class Scheduler {
           )
 
         const endTime = this.time + duration
-        // Reagenda o fim do processo baseado no tempo de duração dele
         if (this.processSchedule[endTime]) {
           this.processSchedule[endTime] = [
             ...this.processSchedule[endTime],
@@ -229,7 +188,6 @@ export class Scheduler {
 
       const sortedSchedule = Object.keys(this.processSchedule).sort(sorter)
 
-      // Tabela com todas informações dos processos (nome, ID e type)
       const printSchedule = sortedSchedule.map(key => {
         const elements: ProcessItem[] = this.processSchedule[key]
 
@@ -242,22 +200,13 @@ export class Scheduler {
         return line + ' ]'
       })
       console.log(colors.green('processSchedule --> '), printSchedule)
-
-      // console.log(this.processSchedule)
     }
 
-    // após processar todos dentro do tempo "time" remove a chave da estrutura
-    // para na próxima iteração pegar os processos do próximo tempo
     if (Object.values(this.processSchedule[this.time]).length === 0) {
       delete this.processSchedule[this.time]
     }
   }
 
-  /**
-   * simulate()
-   * executa até esgotar o modelo, isto é, até a engine não ter mais nada para processar
-   * @returns
-   */
   public simulate() {
     while (!this.isProcessScheduleEmpty()) {
       this.executeSimulation()
@@ -266,11 +215,6 @@ export class Scheduler {
     process.exit(0)
   }
 
-  /**
-   * simulateOneStep()
-   *
-   * @returns
-   */
   public simulateOneStep() {
     this.isDebbuger = true
     this.executeSimulateOneStep = true
@@ -282,22 +226,12 @@ export class Scheduler {
     process.exit(0)
   }
 
-  /**
-   * simulateBy(duration: number)
-   * @param duration do processo
-   * @returns
-   */
   public simulateBy(duration: number) {
     const finalTime = duration + this.time
     this.simulateUntil(finalTime)
     process.exit(0)
   }
 
-  /**
-   * simulateUntil()
-   * @param absoluteTime tempo total da simulação
-   * @returns a simulação com o tempo absoluto
-   */
   public simulateUntil(absoluteTime: number) {
     while (true) {
       if (this.getNextTime() > absoluteTime) break
@@ -307,13 +241,6 @@ export class Scheduler {
     process.exit(0)
   }
 
-  // ---------- criação, destruição e acesso para componentes ----------
-
-  /**
-   * createEntity(entity: Entity)
-   * @param entity recebe o objeto entidade
-   * @returns retorna o Entity
-   */
   public createEntity(entity: Entity): Entity {
     entity.setId(uuid())
     entity.setCreationTime(this.time)
@@ -330,10 +257,6 @@ export class Scheduler {
     return entity
   }
 
-  /**
-   * destroyEntity(id: string)
-   * @param id recebe o id da entidade
-   */
   public destroyEntity(id: string) {
     this.isDebbuger && console.log(`destroyEntity, com id ${id}`)
     const entityIndex = this.entityList.findIndex(entity => entity.id === id)
@@ -342,10 +265,6 @@ export class Scheduler {
     this.destroyedEntities.push(detroyedEntity)
   }
 
-  /**
-   * getEntity(id: string)
-   * @param id recebe o identificador da entidade
-   */
   public getEntity(id: string) {
     const entity = this.entityList.find(entity => entity.getId() === id)
 
@@ -358,12 +277,6 @@ export class Scheduler {
     return entity
   }
 
-  /**
-   * createResource(resource: Resource)
-   * @param name possui o nome do recurso
-   * @param quantity recebe a quantidade alocada ao recurso
-   * @returns
-   */
   public createResource(resource: Resource) {
     resource.setId(uuid())
     this.resourceList.push(resource)
@@ -371,11 +284,6 @@ export class Scheduler {
     return resource
   }
 
-  /**
-   * getResource(id: string)
-   * @param id recebe o identificador do Recurso
-   * @returns
-   */
   public getResource(id: string) {
     const resource = this.resourceList.find(resource => resource.getId() === id)
 
@@ -387,12 +295,6 @@ export class Scheduler {
     return resource
   }
 
-  /**
-   * createProcess(name: string, duration: number)
-   * @param name recebe o nome do processo
-   * @param duration aloca um tempo específico de duração
-   * @returns o id do Processo criado.
-   */
   public createProcess(process: Process): Process {
     process.setId(uuid())
     this.processList.push(process)
@@ -400,11 +302,6 @@ export class Scheduler {
     return process
   }
 
-  /**
-   * getProcess(processId: string)
-   * @param processId recebe o identificador do processo
-   * @returns o objeto Processo
-   */
   public getProcess(processId: string): Process | undefined {
     const process = this.processList.find(
       process => process.getId() === processId
@@ -421,13 +318,6 @@ export class Scheduler {
     return process
   }
 
-  /**
-   * createEntitySet(entitySet: EntitySet)
-   * @param name possui o nome da entidade
-   * @param mode seleciona o modo utilizado
-   * @param maxPossibleSize passa o tamanho máximo da entity set
-   * @returns o EntitySet
-   */
   public createEntitySet(entitySet: EntitySet): EntitySet {
     entitySet.setId(uuid())
     this.entitySetList.push(entitySet)
@@ -436,11 +326,6 @@ export class Scheduler {
     return entitySet
   }
 
-  /**
-   * getEntitySet(id: string)
-   * @param id referente a entidade
-   * @returns o EntitySet
-   */
   public getEntitySet(id: string) {
     const entitySet = this.entitySetList.find(
       entitySet => entitySet.getId() === id
@@ -457,14 +342,6 @@ export class Scheduler {
     return entitySet
   }
 
-  // ---------- random variates ----------
-
-  /**
-   * uniform(minValue: number, maxValue: number)
-   * @param minValue recebe o menor valor
-   * @param maxValue recebe o maior valor
-   * @returns o resultado da operação
-   */
   public uniform(minValue: number, maxValue: number) {
     const uniformResult = rvg.uniform(minValue, maxValue)
     this.isDebbuger &&
@@ -474,11 +351,6 @@ export class Scheduler {
     return uniformResult
   }
 
-  /**
-   * exponential(meanValue: number)
-   * @param meanValue recebe o valor médio
-   * @returns o resultado da operação
-   */
   public exponential(meanValue: number) {
     const expoResult = rvg.exponential(meanValue)
     this.isDebbuger &&
@@ -488,12 +360,6 @@ export class Scheduler {
     return expoResult
   }
 
-  /**
-   * normal(meanValue: number, stdDeviationValue: number)
-   * @param meanValue recebe o valor médio
-   * @param stdDeviationValue utiliza o valor de desvio do valor
-   * @returns o resultado da operação
-   */
   public normal(meanValue: number, stdDeviationValue: number) {
     let normalResult = rvg.normal(meanValue, stdDeviationValue)
     while (normalResult < 0) {
@@ -506,45 +372,22 @@ export class Scheduler {
     return normalResult
   }
 
-  // ---------- coleta de estatísticas ----------
-
-  /**
-   * getEntityTotalQuantity()
-   * @returns quantidade de entidades criadas até o momento
-   */
   public getEntityTotalQuantity() {
     return this.entityList.length + this.destroyedEntities.length
   }
 
-  /**
-   * getActiveEntityTotalQuantity()
-   * @returns quantidade de entidades ativas no momento
-   */
   public getActiveEntityTotalQuantity() {
     return this.entityList.length
   }
 
-  /**
-   * getDestroyedEntityTotalQuantity()
-   * @returns quantidade de entidades destruídas no momento
-   */
   public getDestroyedEntityTotalQuantity() {
     return this.destroyedEntities.length
   }
 
-  /**
-   * getEntityTotalQuantityByName(name: string)
-   * @param name recebe o nome da entidade
-   * @returns quantidade de entidades criadas até o momento com o nome informado
-   */
   public getEntityTotalQuantityByName(name: string) {
     return this.entityList.filter(entity => entity.name === name).length
   }
 
-  /**
-   * averageTimeInModel()
-   * @returns tempo médio que as entidades permanecem no modelo (desde sua criação até sua destruição)
-   */
   public averageTimeInModel() {
     let total = 0
     for (const entity of this.destroyedEntities) {
@@ -554,36 +397,20 @@ export class Scheduler {
     return total / (this.destroyedEntities.length || 1)
   }
 
-  /**
-   * maxEntitiesPresent()
-   * @returns número máximo de entidades presentes no modelo até o momento
-   */
   public maxEntitiesPresent() {
     return this.maxActiveEntities
   }
 
-  /**
-   * getNextTime()
-   * @returns número máximo de entidades presentes no modelo até o momento
-   */
   public getNextTime() {
     return Object.keys(this.processSchedule)
       .map(parseFloat)
       .sort((a, b) => a - b)[0]
   }
 
-  /**
-   * getTotalDuration()
-   * @returns a duração total da simulação
-   */
   public getTotalDuration(): number {
     return this.time - this.initialTime
   }
 
-  /**
-   * showSummary()
-   * @returns um log do resumo da simulação
-   */
   public showSummary() {
     console.log('\n------ RESUMO DA EXECUÇÃO ------\n')
     console.log('Simulation duration:', this.getTotalDuration())

@@ -66,10 +66,7 @@ export class Garcom extends Process {
       }
       scheduler.startProcessNow(
         scheduler.createProcess(
-          new Mesa('Mesa-' + this.mesa, () =>
-            // scheduler.normal(0.1, 45, 20, 8)
-            scheduler.normal(20, 8)
-          )
+          new Mesa('Mesa-' + this.mesa, () => scheduler.normal(20, 8))
         )
       )
     } else if (this.local == 'higienizandoMesa') {

@@ -10,7 +10,6 @@ import { EntitySet } from './EntitySet'
 import { Process } from './Process'
 import { Garcom } from './Garcom'
 import { Pedido } from './Pedido'
-import colors from 'colors'
 
 export class PedidoGarcom extends Process {
   mesa: string = ''

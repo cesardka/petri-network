@@ -6,14 +6,11 @@ import { Banheiro } from './Banheiro'
 import { PetriNetHandler } from './PetriNet'
 import prompt from 'prompt-sync'
 
-// Cria o Scheduler
 export const scheduler = new Scheduler()
 
 export const waiterPetriNet = new PetriNetHandler()
 waiterPetriNet.createPetriNet()
 waiterPetriNet.petriNet?.getLugarByLabel('garcomLivre')?.insereToken(5)
-
-// ------------------------------ Recursos do sistema ------------------------------
 
 export const atendenteCx1 = scheduler.createResource(
   new Resource('atendenteCx1', 1, () => scheduler.getTime())
@@ -34,9 +31,6 @@ export const mesas4Livres = scheduler.createResource(
   new Resource('mesas4', 10, () => scheduler.getTime())
 )
 
-// ------------------------------ Conjuntos de entidades do sistema ------------------------------
-
-// Caixa
 export const filaDeClientesNoCaixa1 = scheduler.createEntitySet(
   new EntitySet('cx1', 'FIFO' as Mode, 0)
 )
@@ -53,7 +47,6 @@ export const filaRoteia = scheduler.createEntitySet(
   new EntitySet('filaRoteia', 'FIFO' as Mode, 0)
 )
 
-// Cozinha
 export const filaDePedidosEntrandoCozinha = scheduler.createEntitySet(
   new EntitySet('cozinha', 'FIFO' as Mode, 100)
 )
@@ -93,7 +86,6 @@ export const filaDeClientesComendoNoBalcao = scheduler.createEntitySet(
 
 filaDeClientesComendoNoBalcao.startLog(10)
 
-// Mesas de 2 lugares
 export const filaDeClientesNaMesa2 = scheduler.createEntitySet(
   new EntitySet('filaM2', 'FIFO' as Mode, 100)
 )
@@ -112,7 +104,6 @@ export const filaDeClientesComendoNaMesa2 = scheduler.createEntitySet(
 
 filaDeClientesComendoNaMesa2.startLog(10)
 
-// Mesas de 4 lugares
 export const filaDeClientesNaMesa4 = scheduler.createEntitySet(
   new EntitySet('filaM4', 'FIFO' as Mode, 100)
 )
@@ -131,10 +122,6 @@ export const filaDeClientesComendoNaMesa4 = scheduler.createEntitySet(
 
 filaDeClientesComendoNaMesa4.startLog(10)
 
-// ------------------------------ Gerenciando os processos do sistema ------------------------------
-
-// Cria o processo de um cliente (clientes entrando no restaurante e sendo levado a um caixa especifico)
-
 scheduler.startProcessNow(
   scheduler.createProcess(
     new Cliente('Cliente', () => scheduler.exponential(3.0))
@@ -146,14 +133,12 @@ scheduler.startProcessNow(
   )
 )
 
-// ---------- Simulando o sistema ----------
-
 while (true) {
   console.log('\n=== Execução ===')
-  console.log('1. Simulate')
-  console.log('2. SimulateOneStep')
-  console.log('3. SimulateBy')
-  console.log('4. SimulateUntil')
+  console.log('1. Simulação')
+  console.log('2. Simulação passo a passo')
+  console.log('3. Simulação duration')
+  console.log('4. Simulação até')
   console.log('9. Sair\n')
 
   const option = prompt({ sigint: true })('')
@@ -166,13 +151,11 @@ while (true) {
       scheduler.simulateOneStep()
       break
     case '3':
-      const duration = prompt({ sigint: true })('Digite o duration:')
+      const duration = prompt({ sigint: true })('Digite a duração:')
       scheduler.simulateBy(Number(duration))
       break
     case '4':
-      const absoluteTime = prompt({ sigint: true })(
-        'Digite quanto tempo você deseja executar:'
-      )
+      const absoluteTime = prompt({ sigint: true })('Digite quanto tempo:')
       scheduler.simulateUntil(Number(absoluteTime))
       break
     case '9':

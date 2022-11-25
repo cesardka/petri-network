@@ -8,10 +8,6 @@ export class Pedido extends Entity {
     this.idCliente = idCliente
   }
 
-  /**
-   * getIdCliente()
-   * @returns id cliente
-   */
   public getIdCliente() {
     return this.idCliente
   }

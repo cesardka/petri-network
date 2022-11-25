@@ -7,7 +7,6 @@ import {
 import { Entity } from './Entity'
 import { Process } from './Process'
 import colors from 'colors'
-import { Pedido } from './Pedido'
 
 export class Cozinha extends Process {
   pedidoSendoPreparado: Entity | undefined

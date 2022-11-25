@@ -72,7 +72,6 @@ export class Caixa extends Process {
   }
 
   public executeOnEnd() {
-    // Cria pedido e inicia serviço da cozinha
     const cliente = this.clienteSendoAtendidoNoCaixa as Entity
     filaDePedidosEntrandoCozinha.insert(
       scheduler.createEntity(
@@ -82,14 +81,10 @@ export class Caixa extends Process {
 
     scheduler.startProcessNow(
       scheduler.createProcess(
-        new Cozinha('Cozinha', () =>
-          // scheduler.normal(0.1, 35, 14, 5)
-          scheduler.normal(14, 5)
-        )
+        new Cozinha('Cozinha', () => scheduler.normal(14, 5))
       )
     )
 
-    // Roteamento dos clientes para a mesa corresponte
     const nomeCliente = cliente.getName()
     if (nomeCliente == 'cliente1') {
       filaDeClientesNoBalcao.insert(this.clienteSendoAtendidoNoCaixa as Entity)
@@ -109,7 +104,6 @@ export class Caixa extends Process {
     }
     scheduler.isDebbuger && console.log(nomeCliente + ' indo para mesa')
 
-    // Libera atendente
     if (this.numCaixa == 1) {
       atendenteCx1.release(1)
     } else {
