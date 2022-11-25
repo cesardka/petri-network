@@ -6,7 +6,6 @@ import { Resource } from './Resource'
 import { v4 as uuid } from 'uuid'
 import promptSync from 'prompt-sync'
 import colors from 'colors'
-import { sorter } from './utils/sort'
 import {
   cozinheiros,
   filaDeClientesComendoNaMesa2,
@@ -112,7 +111,7 @@ export class Scheduler {
     while (this.processSchedule[this.time].length > 0) {
       if (this.isDebbuger) {
         const continueResult = prompt(
-          colors.yellow(
+          colors.blue(
             '\nDeseja continuar (Enter para continuar, "N" para encerrar)? \n'
           )
         )
@@ -132,7 +131,7 @@ export class Scheduler {
         if (!engineProcess.canExecute()) {
           this.isDebbuger &&
             console.log(
-              colors.red(
+              colors.blue(
                 `\tSem recursos para executar processo: --> Process ${
                   engineProcess.name
                 } com id ${engineProcess.getId()} e time: ${this.time}`
@@ -157,11 +156,11 @@ export class Scheduler {
 
         this.isDebbuger &&
           console.log(
-            `\t${colors.green('ExecuteOnStart():')} --> Process ${colors.yellow(
+            `\t${colors.blue('ExecuteOnStart():')} --> Process ${colors.blue(
               `${engineProcess.name}`
-            )} com id ${colors.yellow(
+            )} com id ${colors.blue(
               `${engineProcess.getId()}`
-            )} e time:  ${colors.yellow(`${this.time}`)}`
+            )} e time:  ${colors.blue(`${this.time}`)}`
           )
 
         const endTime = this.time + duration
@@ -178,11 +177,11 @@ export class Scheduler {
 
         this.isDebbuger &&
           console.log(
-            `\t${colors.green('ExecuteOnEnd():')}  --> Process ${colors.yellow(
+            `\t${colors.blue('ExecuteOnEnd():')}  --> Process ${colors.blue(
               `${engineProcess.name}`
-            )} com id ${colors.yellow(
+            )} com id ${colors.blue(
               `${engineProcess.getId()}`
-            )} e time:  ${colors.yellow(`${this.time}`)}`
+            )} e time:  ${colors.blue(`${this.time}`)}`
           )
       }
 
@@ -199,7 +198,7 @@ export class Scheduler {
 
         return line + ' ]'
       })
-      console.log(colors.green('processSchedule --> '), printSchedule)
+      console.log(colors.blue('processSchedule --> '), printSchedule)
     }
 
     if (Object.values(this.processSchedule[this.time]).length === 0) {
@@ -269,7 +268,7 @@ export class Scheduler {
     const entity = this.entityList.find(entity => entity.getId() === id)
 
     if (!entity) {
-      console.error(colors.red(`getEntity: entity com ID ${id} nao existe`))
+      console.error(colors.blue(`getEntity: entity com ID ${id} nao existe`))
     }
 
     this.isDebbuger && console.log(`getEntity, com id ${id}`)
@@ -288,7 +287,9 @@ export class Scheduler {
     const resource = this.resourceList.find(resource => resource.getId() === id)
 
     if (!resource) {
-      console.error(colors.red(`getResource: resource com ID ${id} nao existe`))
+      console.error(
+        colors.blue(`getResource: resource com ID ${id} nao existe`)
+      )
     }
 
     this.isDebbuger && console.log(`getResource, com id ${id}`)
@@ -309,7 +310,7 @@ export class Scheduler {
 
     if (!process) {
       console.error(
-        colors.red(`getProcess: Processo com ID ${processId} nao existe`)
+        colors.blue(`getProcess: Processo com ID ${processId} nao existe`)
       )
     }
 
@@ -333,7 +334,7 @@ export class Scheduler {
 
     if (!entitySet) {
       console.error(
-        colors.red(`getEntitySet: entitySet com ID ${id} nao existe`)
+        colors.blue(`getEntitySet: entitySet com ID ${id} nao existe`)
       )
     }
 
@@ -482,4 +483,15 @@ export class Scheduler {
       filaDeClientesComendoNaMesa4.getLog()
     )
   }
+}
+
+export const sorter = (a: string, b: string) => {
+  let numA = Number(a)
+  let numB = Number(b)
+  if (numA < numB) {
+    return -1
+  } else if (numA > numB) {
+    return 1
+  }
+  return 0
 }

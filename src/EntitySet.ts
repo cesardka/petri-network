@@ -1,7 +1,6 @@
 import colors from 'colors'
 import { Entity } from './Entity'
 import { scheduler } from '.'
-import { randomInteger } from './utils/math'
 
 export const enum Mode {
   FIFO = 'FIFO',
@@ -72,11 +71,11 @@ export class EntitySet {
 
   public insert(entity: Entity) {
     if (this.isFull()) {
-      console.error(colors.red('EntitySet is full'))
+      console.error(colors.blue('EntitySet is full'))
       return
     }
     if (!entity.id) {
-      console.error(colors.red('Id not setted in entity'))
+      console.error(colors.blue('Id not setted in entity'))
       return
     }
 
@@ -94,7 +93,7 @@ export class EntitySet {
           this.set.sort((a, b) => a.priority - b.priority)
         } else {
           console.error(
-            colors.red(
+            colors.blue(
               `insert() priority based: Prioridade inválida (${entity.getPriority()}) na entidade com id = ${entity.getId()} `
             )
           )
@@ -135,7 +134,7 @@ export class EntitySet {
       )
 
     if (!entityRemoved || !entityRemoved.id) {
-      console.error(colors.red('Unable to remove Entity'))
+      console.error(colors.blue('Unable to remove Entity'))
       return
     }
 
@@ -156,7 +155,7 @@ export class EntitySet {
     const [removed] = this.set.splice(index, 1)
 
     if (!removed || !removed.id) {
-      console.error(colors.red('Unable to remove Entity'))
+      console.error(colors.blue('Unable to remove Entity'))
       return null
     }
     this.updateSetSize()
@@ -250,4 +249,8 @@ export class EntitySet {
   public getLog(): Log[] {
     return this.log
   }
+}
+
+export function randomInteger(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }

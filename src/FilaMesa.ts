@@ -47,9 +47,9 @@ export class FilaMesa extends Process {
       scheduler.isDebbuger &&
         console.log(
           colors.blue(
-            `Quantidade de bancos existentes --> ${colors.yellow(
+            `Quantidade de bancos existentes --> ${colors.blue(
               '' + bancosLivres.quantity
-            )} e em uso ${colors.yellow('' + bancosLivres.used)} bancos`
+            )} e em uso ${colors.blue('' + bancosLivres.used)} bancos`
           )
         )
       filaGarcomLimpaBalcao.insert(filaDeClientesNoBalcao.remove() as Entity)
@@ -59,9 +59,9 @@ export class FilaMesa extends Process {
       scheduler.isDebbuger &&
         console.log(
           colors.blue(
-            `Quantidade de mesas2 existentes --> ${colors.yellow(
+            `Quantidade de mesas2 existentes --> ${colors.blue(
               '' + mesas2Livres.quantity
-            )} e em uso ${colors.yellow('' + mesas2Livres.used)} mesas2`
+            )} e em uso ${colors.blue('' + mesas2Livres.used)} mesas2`
           )
         )
       filaGarcomLimpaMesa2.insert(filaDeClientesNaMesa2.remove() as Entity)
@@ -71,9 +71,9 @@ export class FilaMesa extends Process {
       scheduler.isDebbuger &&
         console.log(
           colors.blue(
-            `Quantidade de mesas4 existentes --> ${colors.yellow(
+            `Quantidade de mesas4 existentes --> ${colors.blue(
               '' + mesas4Livres.quantity
-            )} e em uso ${colors.yellow('' + mesas4Livres.used)} mesas`
+            )} e em uso ${colors.blue('' + mesas4Livres.used)} mesas`
           )
         )
       filaGarcomLimpaMesa4.insert(filaDeClientesNaMesa4.remove() as Entity)

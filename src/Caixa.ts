@@ -49,9 +49,9 @@ export class Caixa extends Process {
       scheduler.isDebbuger &&
         console.log(
           colors.blue(
-            `Quantidade de atendentes existentes no Caixa1  --> ${colors.yellow(
+            `Quantidade de atendentes existentes no Caixa1  --> ${colors.blue(
               '' + atendenteCx1.quantity
-            )} e em uso ${colors.yellow('' + atendenteCx1.used)} atendentes`
+            )} e em uso ${colors.blue('' + atendenteCx1.used)} atendentes`
           )
         )
       this.clienteSendoAtendidoNoCaixa =
@@ -61,9 +61,9 @@ export class Caixa extends Process {
       scheduler.isDebbuger &&
         console.log(
           colors.blue(
-            `Quantidade de atendentes existentes no Caixa2  --> ${colors.yellow(
+            `Quantidade de atendentes existentes no Caixa2  --> ${colors.blue(
               '' + atendenteCx2.quantity
-            )} e em uso ${colors.yellow('' + atendenteCx2.used)} atendentes`
+            )} e em uso ${colors.blue('' + atendenteCx2.used)} atendentes`
           )
         )
       this.clienteSendoAtendidoNoCaixa =

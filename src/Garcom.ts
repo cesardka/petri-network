@@ -31,7 +31,7 @@ export class Garcom extends Process {
     scheduler.isDebbuger &&
       console.log(
         colors.blue(
-          `Quantidade de garçons livres --> ${colors.yellow(
+          `Quantidade de garçons livres --> ${colors.blue(
             '' +
               waiterPetriNet.petriNet
                 ?.getLugarByLabel('garcomLivre')

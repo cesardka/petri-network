@@ -27,9 +27,9 @@ export class Cozinha extends Process {
     scheduler.isDebbuger &&
       console.log(
         colors.blue(
-          `Quantidade de cozinheiros existentes --> ${colors.yellow(
+          `Quantidade de cozinheiros existentes --> ${colors.blue(
             '' + cozinheiros.quantity
-          )} e em uso ${colors.yellow('' + cozinheiros.used)} cozinheiros`
+          )} e em uso ${colors.blue('' + cozinheiros.used)} cozinheiros`
         )
       )
     this.pedidoSendoPreparado = filaDePedidosEntrandoCozinha.remove() as Entity
